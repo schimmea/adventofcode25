@@ -8,10 +8,10 @@ for rot in rotations:
     is_zero_departure_to_left = (dial == 0) and (amount < 0)  # Doesn't click
     zero_passes, dial = divmod(dial + amount, 100)
     is_zero_arrival_from_right = (dial == 0) and (amount < 0)  # Does click
-    score1 += dial == 0  # day 1
+    score1 += dial == 0  # part 1
     score2 += (
         abs(zero_passes) - is_zero_departure_to_left + is_zero_arrival_from_right
-    )  # day 2
+    )  # part 2
 
 print(f"{score1=}")
 print(f"{score2=}")
