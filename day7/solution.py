@@ -8,20 +8,16 @@ width = data.find("\n")
 splitter_cols = [
     res.span()[0] % width for res in re.finditer(r"\^", data.replace("\n", ""))
 ]
-beamcols_merges = defaultdict(int)
-beamcols_merges[data.find("S")] = 0
-score1, score2 = 0, 1
+beamcols_timelines = defaultdict(int)
+beamcols_timelines[data.find("S")] = 1
+splits = 0
 for sc in splitter_cols:
-    if sc not in beamcols_merges:
+    if sc not in beamcols_timelines:
         continue
-    score1 += 1  # part1
-    score2 += 1 + beamcols_merges[sc]  # part2
-    # Avoid lazy eval shenanigans with defaultdict:
-    left_exists = sc - 1 in beamcols_merges
-    right_exists = sc + 1 in beamcols_merges
-    beamcols_merges[sc - 1] += beamcols_merges[sc] + left_exists
-    beamcols_merges[sc + 1] += beamcols_merges[sc] + right_exists
-    del beamcols_merges[sc]
+    splits += 1
+    beamcols_timelines[sc - 1] += beamcols_timelines[sc]
+    beamcols_timelines[sc + 1] += beamcols_timelines[sc]
+    del beamcols_timelines[sc]
 
-print(score1)
-print(score2)
+print(splits)  # part 1
+print(sum(beamcols_timelines.values()))  # part 2
