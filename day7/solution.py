@@ -11,7 +11,7 @@ splitter_cols = [
 beamcols_merges = defaultdict(int)
 beamcols_merges[data.find("S")] = 0
 score1, score2 = 0, 1
-for i, sc in enumerate(splitter_cols):
+for sc in splitter_cols:
     if sc not in beamcols_merges:
         continue
     score1 += 1  # part1
