@@ -11,11 +11,11 @@ dists = pdist(boxes, "euclidean")
 linkage = single(dists)
 # Okay, apparently "nothing happens" means a connection is still used
 # I'm too deep into clustering now, use a hack since all dists are unique:
-exclusions = np.sum(~np.isin(np.sort(dists)[:1000], linkage[:1000, 2]))
-clusters = fcluster(linkage, criterion="maxclust", t=len(boxes) - (1000 - exclusions))
+n_skips = np.sum(~np.isin(np.sort(dists)[:1000], linkage[:1000, 2]))
+clusters = fcluster(linkage, criterion="maxclust", t=len(boxes) - (1000 - n_skips))
 _, counts = np.unique_counts(clusters)
-score = np.prod(np.sort(counts)[-3:])
-print(score)
+score1 = np.prod(np.sort(counts)[-3:])
+print(score1)
 
 last_box_left = int(linkage[-1, 0])
 last_box_right = int(np.argsort(squareform(dists)[last_box_left])[1])  # 0 is itself
